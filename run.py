@@ -4,7 +4,8 @@ run.py: the single entry point for the whole project.
 Usage (from the project folder):
     uv run run.py generate     # Phase 1: create the synthetic source data
     uv run run.py summary      # print a quick look at what was generated
-    uv run run.py build        # Phase 2: build the DuckDB warehouse   (coming next)
+    uv run run.py build        # Phase 2: build the DuckDB warehouse, then run quality checks
+    uv run run.py check        # run the data quality checks on an existing warehouse
     uv run run.py all          # every step that exists so far, in order
 
 Why a Python script instead of a Makefile? `make` is not installed on Windows by
@@ -37,6 +38,20 @@ def generate() -> None:
     step("3/4 product usage events (month by month)", usage.main)
     step("4/4 support tickets", tickets.main)
     print(f"\nAll raw files are in {config.RAW_DIR}")
+
+
+def build() -> None:
+    from pipeline import build as build_step
+    from pipeline import quality
+
+    step("build warehouse (pipeline/sql/*.sql)", build_step.main)
+    step("data quality checks", quality.main)
+
+
+def check() -> None:
+    from pipeline import quality
+
+    step("data quality checks", quality.main)
 
 
 def summary() -> None:
@@ -77,7 +92,8 @@ def not_yet(phase: str):
 COMMANDS = {
     "generate": generate,
     "summary": summary,
-    "build": not_yet("Phase 2 (warehouse and ETL)"),
+    "build": build,
+    "check": check,
     "model": not_yet("Phase 4 (health score and churn model)"),
     "publish": not_yet("Phase 4 (Supabase)"),
 }
@@ -91,6 +107,7 @@ def main() -> None:
     if args.command == "all":
         generate()
         summary()
+        build()
     else:
         COMMANDS[args.command]()
 
