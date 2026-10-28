@@ -1,0 +1,7 @@
+# Used by Render, which installs only what the API needs (no Streamlit,
+# scikit-learn or Faker), so the free server builds and starts faster.
+fastapi>=0.115
+uvicorn>=0.30
+psycopg[binary]>=3.2
+psycopg-pool>=3.2
+python-dotenv>=1.0

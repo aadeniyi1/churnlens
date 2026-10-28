@@ -1,0 +1,20 @@
+# render.yaml: tells Render how to run the API. Render calls this a "Blueprint".
+# Step-by-step instructions: docs/deploy.md, Part 2.
+services:
+  - type: web
+    name: churnlens-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r api/requirements.txt
+    # Render gives the app a port number in $PORT; 0.0.0.0 means "accept outside connections".
+    startCommand: uvicorn api.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /status
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.8"
+      - key: CHURNLENS_DB
+        value: postgres          # read Supabase, not a local DuckDB file
+      - key: API_KEY
+        generateValue: true      # Render makes a long random key; find it in the Environment tab
+      - key: SUPABASE_DB_URL
+        sync: false              # Render asks you to paste this once; it is never stored in Git

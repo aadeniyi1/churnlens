@@ -9,6 +9,7 @@ Usage (from the project folder):
     uv run run.py model        # Phase 4: train the churn model and score every account
     uv run run.py dashboard    # open the Streamlit dashboard in your browser
     uv run run.py publish      # copy the dashboard tables to Supabase (needs .env)
+    uv run run.py api          # start the REST API at http://127.0.0.1:8000/docs
     uv run run.py all          # every step that exists so far, in order
 
 Why a Python script instead of a Makefile? `make` is not installed on Windows by
@@ -72,6 +73,16 @@ def dashboard() -> None:
                     str(config.PROJECT_ROOT / "dashboard" / "Home.py")], check=False)
 
 
+def api() -> None:
+    import subprocess
+
+    # Same as typing:  uvicorn api.main:app --reload   (Ctrl+C to stop it)
+    # --reload restarts the server whenever you save a file, handy while editing.
+    print("API docs: http://127.0.0.1:8000/docs   (local key: dev-key, or API_KEY from .env)")
+    subprocess.run([sys.executable, "-m", "uvicorn", "api.main:app", "--reload"],
+                   cwd=config.PROJECT_ROOT, check=False)
+
+
 def publish() -> None:
     from pipeline import publish as publish_step
 
@@ -115,6 +126,7 @@ COMMANDS = {
     "model": model,
     "dashboard": dashboard,
     "publish": publish,
+    "api": api,
 }
 
 
