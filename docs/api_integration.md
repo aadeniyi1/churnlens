@@ -9,7 +9,7 @@ Interactive docs, where you can try every call in the browser: **`<base URL>/doc
 | Environment | Base URL | Key |
 |---|---|---|
 | Your laptop (`uv run run.py api`) | `http://127.0.0.1:8000` | `dev-key`, or `API_KEY` from `.env` |
-| Hosted on Render | `https://churnlens-api.onrender.com` (yours may differ) | ask the owner |
+| Hosted on Render | `https://churnlens-api-bber.onrender.com` ([live docs](https://churnlens-api-bber.onrender.com/docs)) | ask the owner |
 
 All data is synthetic. Scores refresh when the pipeline runs (`uv run run.py all` then `publish`).
 
@@ -122,14 +122,14 @@ Run it against the hosted API:
 
 ```bash
 # macOS / Linux
-export CHURNLENS_API_URL=https://churnlens-api.onrender.com
+export CHURNLENS_API_URL=https://churnlens-api-bber.onrender.com
 export CHURNLENS_API_KEY=your-key
 uv run examples/client.py
 ```
 
 ```powershell
 # Windows PowerShell
-$env:CHURNLENS_API_URL="https://churnlens-api.onrender.com"
+$env:CHURNLENS_API_URL="https://churnlens-api-bber.onrender.com"
 $env:CHURNLENS_API_KEY="your-key"
 uv run examples/client.py
 ```

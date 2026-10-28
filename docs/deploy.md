@@ -134,14 +134,14 @@ Health check path (under **Advanced**): `/status`.
 
 ```bash
 # macOS
-export CHURNLENS_API_URL=https://churnlens-api.onrender.com   # your address from step 6
+export CHURNLENS_API_URL=https://churnlens-api-bber.onrender.com   # your address from step 6
 export CHURNLENS_API_KEY=paste-your-key
 uv run examples/client.py
 ```
 
 ```powershell
 # Windows PowerShell
-$env:CHURNLENS_API_URL="https://churnlens-api.onrender.com"
+$env:CHURNLENS_API_URL="https://churnlens-api-bber.onrender.com"
 $env:CHURNLENS_API_KEY="paste-your-key"
 uv run examples/client.py
 ```
