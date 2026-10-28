@@ -6,6 +6,9 @@ Usage (from the project folder):
     uv run run.py summary      # print a quick look at what was generated
     uv run run.py build        # Phase 2: build the DuckDB warehouse, then run quality checks
     uv run run.py check        # run the data quality checks on an existing warehouse
+    uv run run.py model        # Phase 4: train the churn model and score every account
+    uv run run.py dashboard    # open the Streamlit dashboard in your browser
+    uv run run.py publish      # copy the dashboard tables to Supabase (needs .env)
     uv run run.py all          # every step that exists so far, in order
 
 Why a Python script instead of a Makefile? `make` is not installed on Windows by
@@ -54,6 +57,27 @@ def check() -> None:
     step("data quality checks", quality.main)
 
 
+def model() -> None:
+    from model import score, train
+
+    step("train and evaluate churn model", train.main)
+    step("score every account", score.main)
+
+
+def dashboard() -> None:
+    import subprocess
+
+    # Same as typing:  streamlit run dashboard/Home.py   (Ctrl+C to stop it)
+    subprocess.run([sys.executable, "-m", "streamlit", "run",
+                    str(config.PROJECT_ROOT / "dashboard" / "Home.py")], check=False)
+
+
+def publish() -> None:
+    from pipeline import publish as publish_step
+
+    step("publish tables to Supabase", publish_step.main)
+
+
 def summary() -> None:
     """Use DuckDB to peek at the raw Parquet files without loading them into pandas."""
     import duckdb
@@ -83,19 +107,14 @@ def summary() -> None:
         con.sql(sql).show()
 
 
-def not_yet(phase: str):
-    def _inner() -> None:
-        print(f"This step arrives in {phase}. Nothing to run yet.")
-    return _inner
-
-
 COMMANDS = {
     "generate": generate,
     "summary": summary,
     "build": build,
     "check": check,
-    "model": not_yet("Phase 4 (health score and churn model)"),
-    "publish": not_yet("Phase 4 (Supabase)"),
+    "model": model,
+    "dashboard": dashboard,
+    "publish": publish,
 }
 
 
@@ -108,6 +127,7 @@ def main() -> None:
         generate()
         summary()
         build()
+        model()
     else:
         COMMANDS[args.command]()
 

@@ -1,0 +1,8 @@
+# Used by Streamlit Community Cloud, which installs only what the dashboard needs
+# (no scikit-learn or Faker), so the hosted app starts faster.
+duckdb>=1.1
+pandas>=2.2
+plotly>=5.20
+psycopg[binary]>=3.2
+python-dotenv>=1.0
+streamlit>=1.40

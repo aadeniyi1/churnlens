@@ -58,9 +58,12 @@ SEATS_RANGE = {"SMB": (3, 12), "Mid-Market": (12, 40), "Enterprise": (40, 150)}
 
 # Products (plans). Price is list price per seat per month, in US dollars.
 PRODUCTS = [
-    {"product_id": "P-STARTER", "product_name": "ChurnLens Starter", "tier": "Starter", "list_price_per_seat": 25},
-    {"product_id": "P-PRO", "product_name": "ChurnLens Pro", "tier": "Pro", "list_price_per_seat": 45},
-    {"product_id": "P-ENT", "product_name": "ChurnLens Enterprise", "tier": "Enterprise", "list_price_per_seat": 80},
+    {"product_id": "P-STARTER", "product_name": "ChurnLens Starter", "tier": "Starter",
+     "list_price_per_seat": 25},
+    {"product_id": "P-PRO", "product_name": "ChurnLens Pro", "tier": "Pro",
+     "list_price_per_seat": 45},
+    {"product_id": "P-ENT", "product_name": "ChurnLens Enterprise", "tier": "Enterprise",
+     "list_price_per_seat": 80},
 ]
 
 CONTRACT_MONTHS = 12  # every contract is a 1-year term
