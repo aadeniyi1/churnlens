@@ -1,0 +1,52 @@
+# ci.yml: runs automatically on every push and every pull request.
+#
+# It does what you would do by hand before merging:
+#   1. check code style (ruff),
+#   2. build the whole project from scratch on a small dataset,
+#   3. run every test.
+# If any step fails, GitHub shows a red X on the pull request so problems are
+# caught before they reach main. A green check means it all worked.
+#
+# You can watch it run under the repo's "Actions" tab on GitHub.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# If you push twice quickly, cancel the older run instead of running both.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read   # this workflow only reads the code
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CHURNLENS_ACCOUNTS: "500"   # a small dataset: the full build finishes in under a minute
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Install uv (and the Python version in .python-version)
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Install libraries exactly as pinned in uv.lock
+        run: uv sync --frozen
+
+      - name: Lint (ruff)
+        run: uv run ruff check .
+
+      - name: Build everything from scratch (generate, warehouse, quality checks, model)
+        run: uv run run.py all
+
+      - name: Run tests
+        run: uv run pytest -v

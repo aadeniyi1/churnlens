@@ -154,9 +154,13 @@ How to connect other systems to the API: [api_integration.md](api_integration.md
 
 - **Streamlit apps sleep** after several days without visitors. The first visitor sees a "wake up" button,
   which takes about 30 seconds. Open your app before an interview.
-- **Free Supabase projects pause** after about a week with no activity. Phase 6 adds a nightly GitHub Action
-  that republishes the data, which also keeps the project awake. Until then, if it pauses, click **Restore**
-  in Supabase.
+- **Free Supabase projects pause** after about a week with no activity. The nightly GitHub Action
+  (`.github/workflows/nightly.yml`) republishes the data every day, which keeps it awake. Turn it on once:
+  GitHub repo → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**, name
+  `SUPABASE_DB_URL`, value = your connection string. To test it, open the **Actions** tab →
+  **Nightly pipeline** → **Run workflow**. If the project pauses anyway, click **Restore** in Supabase.
+- **GitHub turns off scheduled workflows** in a public repo after 60 days with no commits. If that happens,
+  the Actions tab shows a button to turn it back on.
 - **Render's free API sleeps** after 15 minutes without requests. The next request takes up to a minute.
   Open `/status` a minute before a demo.
 - Free-plan limits change over time, so check the Supabase and Streamlit pricing pages if anything looks off.
