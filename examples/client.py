@@ -15,10 +15,11 @@ RUN IT
         uv run examples/client.py
 
     Against the live API on Render
-        Mac:     export CHURNLENS_API_URL=https://YOUR-APP.onrender.com
+        Mac:     export CHURNLENS_API_URL=https://churnlens-api-bber.onrender.com
                  export CHURNLENS_API_KEY=your-key
                  uv run examples/client.py
-        Windows: $env:CHURNLENS_API_URL="https://YOUR-APP.onrender.com"; $env:CHURNLENS_API_KEY="your-key"
+        Windows: $env:CHURNLENS_API_URL="https://churnlens-api-bber.onrender.com"
+                 $env:CHURNLENS_API_KEY="your-key"
                  uv run examples/client.py
 """
 

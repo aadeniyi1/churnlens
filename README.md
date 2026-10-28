@@ -2,7 +2,7 @@
 
 **Enterprise B2B Telemetry & Churn Intelligence Platform**
 
-**[▶ Live dashboard](https://churnlens-ade.streamlit.app/)** · [API guide](docs/api_integration.md) · [Analysis notebook](analysis/retention_story.ipynb) · [Model card](docs/model_card.md)
+**[▶ Live dashboard](https://churnlens-ade.streamlit.app/)** · **[Live API docs](https://churnlens-api-bber.onrender.com/docs)** · [API guide](docs/api_integration.md) · [Analysis notebook](analysis/retention_story.ipynb) · [Model card](docs/model_card.md)
 
 ChurnLens is a working model of how a B2B SaaS company finds out which customer
 accounts will renew, expand, or leave. It combines contracts, product usage, and
@@ -123,7 +123,9 @@ curl -H "X-API-Key: dev-key" "http://127.0.0.1:8000/v1/accounts?risk_tier=High&r
 Every `/v1` call needs an `X-API-Key` header. [`examples/client.py`](examples/client.py) is a sample
 "nightly CRM sync" that pages through every account and writes a CSV ready to import into a CRM.
 [docs/api_integration.md](docs/api_integration.md) covers authentication, errors, and three
-integration patterns. It runs for free on Render: see [docs/deploy.md](docs/deploy.md), Part 2.
+integration patterns. The live API runs for free on Render at
+**[https://churnlens-api-bber.onrender.com/docs](https://churnlens-api-bber.onrender.com/docs)** (it sleeps when idle, so the first request can take a minute).
+To deploy your own, see [docs/deploy.md](docs/deploy.md), Part 2.
 
 ---
 
