@@ -15,3 +15,4 @@ data/
 # OS clutter
 .DS_Store
 Thumbs.db
+examples/crm_sync.csv

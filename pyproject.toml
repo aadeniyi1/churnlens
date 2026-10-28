@@ -7,19 +7,23 @@ requires-python = ">=3.12"
 dependencies = [
     "duckdb>=1.1",
     "faker>=30.0",
+    "fastapi>=0.162.0",
     "matplotlib>=3.11.2",
     "numpy>=2.0",
     "pandas>=2.2",
     "plotly>=7.1.0",
+    "psycopg-pool>=3.3.3",
     "psycopg[binary]>=3.3.6",
     "pyarrow>=17.0",
     "python-dotenv>=1.2.4",
     "scikit-learn>=1.9.1",
     "streamlit>=1.66.1",
+    "uvicorn>=0.54.0",
 ]
 
 [dependency-groups]
 dev = [
+    "httpx>=0.28.1",
     "ipykernel>=7.4.0",
     "pytest>=8.0",
     "ruff>=0.6",
@@ -38,3 +42,5 @@ ignore = ["B905"]  # zip(strict=...) adds noise for beginners; our zips always p
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]  # lets tests import config.py and generate/
+# Starlette suggests a newer test HTTP library; the current one works fine, so hide the notice.
+filterwarnings = ["ignore:Using `httpx` with `starlette.testclient`"]
