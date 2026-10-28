@@ -1,0 +1,17 @@
+# Python and uv
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Generated data: always rebuilt by `uv run run.py generate`, so never committed
+data/
+
+# Secrets: real values live only in .env on your machine (see .env.example)
+.env
+
+# OS clutter
+.DS_Store
+Thumbs.db

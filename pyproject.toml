@@ -1,0 +1,26 @@
+[project]
+name = "churnlens"
+version = "0.1.0"
+description = "Enterprise B2B telemetry and churn intelligence platform (portfolio project)"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "duckdb>=1.1",
+    "faker>=30.0",
+    "numpy>=2.0",
+    "pandas>=2.2",
+    "pyarrow>=17.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]  # lets tests import config.py and generate/
