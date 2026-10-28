@@ -39,6 +39,12 @@ line-length = 110
 select = ["E", "W", "F", "I", "B", "UP"]
 ignore = ["B905"]  # zip(strict=...) adds noise for beginners; our zips always pair equal lists
 
+[tool.ruff.lint.isort]
+# The dashboard imports its helper module as `data`. Without this line ruff decides
+# whether `data` is ours by checking for a data/ folder, which exists on your laptop
+# but not on a fresh GitHub runner, so the two would disagree about import order.
+known-first-party = ["data"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]  # lets tests import config.py and generate/

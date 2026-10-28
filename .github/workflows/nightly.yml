@@ -1,0 +1,50 @@
+# nightly.yml: rebuilds the data and republishes it to Supabase every night.
+#
+# Why: in a real company the pipeline runs on a schedule, not by hand. It also
+# keeps the free Supabase project awake (free projects pause after about a week
+# with no activity), so the live dashboard and API keep working.
+#
+# SETUP (once): GitHub repo -> Settings -> Secrets and variables -> Actions ->
+# New repository secret. Name: SUPABASE_DB_URL. Value: the same connection
+# string that is in your .env file. GitHub hides it in logs and never shows it again.
+#
+# To run it right now instead of waiting: Actions tab -> Nightly pipeline -> Run workflow.
+
+name: Nightly pipeline
+
+on:
+  schedule:
+    - cron: "0 6 * * *"   # every day at 06:00 UTC (GitHub may start it a few minutes late)
+  workflow_dispatch:       # adds a "Run workflow" button in the Actions tab
+
+permissions:
+  contents: read
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Install libraries
+        run: uv sync --frozen
+
+      - name: Build everything (full 3,000-account dataset)
+        run: uv run run.py all
+
+      - name: Publish to Supabase
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          if [ -z "$SUPABASE_DB_URL" ]; then
+            echo "::warning::SUPABASE_DB_URL secret is not set, so nothing was published. See the comments at the top of nightly.yml."
+          else
+            uv run run.py publish
+          fi
