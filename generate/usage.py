@@ -39,7 +39,8 @@ def monthly_state(contracts: pd.DataFrame, month: pd.Period, rng: np.random.Gene
     """
     month_start = month.to_timestamp()
     # Contracts always start on the 1st, so "active this month" is simply:
-    active = contracts[(contracts["start_date"] <= month_start) & (contracts["end_date"] >= month_start)].copy()
+    is_active = (contracts["start_date"] <= month_start) & (contracts["end_date"] >= month_start)
+    active = contracts[is_active].copy()
     if active.empty:
         return active
 

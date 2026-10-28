@@ -10,7 +10,12 @@ dependencies = [
     "matplotlib>=3.11.2",
     "numpy>=2.0",
     "pandas>=2.2",
+    "plotly>=7.1.0",
+    "psycopg[binary]>=3.3.6",
     "pyarrow>=17.0",
+    "python-dotenv>=1.2.4",
+    "scikit-learn>=1.9.1",
+    "streamlit>=1.66.1",
 ]
 
 [dependency-groups]
@@ -21,7 +26,14 @@ dev = [
 ]
 
 [tool.ruff]
-line-length = 100
+line-length = 110
+
+[tool.ruff.lint]
+# Pinned rule set, so `ruff check` gives the same answer on every machine and in CI:
+# E/W = style errors, F = real bugs (unused names, undefined variables), I = import order,
+# B = common bug patterns, UP = modern Python syntax
+select = ["E", "W", "F", "I", "B", "UP"]
+ignore = ["B905"]  # zip(strict=...) adds noise for beginners; our zips always pair equal lists
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
