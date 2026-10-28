@@ -2,6 +2,8 @@
 
 **Enterprise B2B Telemetry & Churn Intelligence Platform**
 
+**[▶ Live dashboard](https://churnlens-ade.streamlit.app/)** · [Analysis notebook](analysis/retention_story.ipynb) · [Model card](docs/model_card.md)
+
 ChurnLens is a working model of how a B2B SaaS company finds out which customer
 accounts will renew, expand, or leave. It combines contracts, product usage, and
 support history into one warehouse, scores each account's health, predicts churn
@@ -92,8 +94,9 @@ Every account gets two scores:
 - **Churn probability**, from a gradient boosting model trained only on data from 3+ months before each
   renewal and tested on later renewals: **ROC AUC 0.86**, and the riskiest 10% of accounts hold **50% of churned ARR**.
 
-Details: [docs/model_card.md](docs/model_card.md). To put the dashboard online for free, follow
-[docs/deploy.md](docs/deploy.md).
+Details: [docs/model_card.md](docs/model_card.md). The live version runs at
+**[churnlens-ade.streamlit.app](https://churnlens-ade.streamlit.app/)** (free hosting, so it may take
+30 seconds to wake up). To deploy your own copy, follow [docs/deploy.md](docs/deploy.md).
 
 ---
 

@@ -28,6 +28,8 @@ Your laptop does the heavy work (1.7M events). Only the small finished tables (a
 3. Copy it. It looks like this:
    `postgresql://postgres.abcdefghijk:[YOUR-PASSWORD]@aws-0-us-east-1.pooler.supabase.com:5432/postgres`
 4. Replace `[YOUR-PASSWORD]` (including the brackets) with your real password.
+   If your password contains symbols, they must be "URL-encoded": write `@` as `%40`, `#` as `%23`,
+   `/` as `%2F`, `:` as `%3A`, `?` as `%3F`, and `%` as `%25`. Letters and numbers stay as they are.
 
 ## Step 3: Publish your data
 
@@ -96,6 +98,7 @@ Open the link and check that the page captions say `Source: Supabase Postgres`.
 |---|---|
 | `SUPABASE_DB_URL is not set` | `.env` is missing, or the line has a typo. It must be in the project folder, next to `run.py`. |
 | `password authentication failed` | Wrong password, or `[YOUR-PASSWORD]` is still in the string. Reset the password in Supabase → Project settings → Database. |
+| `failed to resolve host '...@aws-...'` | Your password contains `@`. Write it as `%40` in the connection string (see Step 2). |
 | `could not translate host name` / timeout | You used the Direct connection string. Use **Session pooler**. |
 | Dashboard says `No warehouse found` on Streamlit Cloud | The `SUPABASE_DB_URL` secret is missing. Add it in the app's **Settings → Secrets**, then reboot the app. |
 | Dashboard works but shows old numbers | Data is cached for an hour. Use **⋮ → Clear cache** in the app, or wait. |
